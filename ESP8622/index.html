@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8"><meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<title>ProjectionBall</title>
+		<style>
+			body { font-size:12pt; color:#444444; }
+			h1 { font-size:16pt; background-color:#DFDFDF; }
+			h2 { font-size:16pt; background-color:#4F4F4F; color:#FFFFFF; font-weight : normal;}
+			pre { background-color:#EEEEEE; }
+		</style>
+	</head>
+	<body>
+		<script>
+			t=0;			
+			function dsptime() {
+				DD = new Date();
+				Year = ('00'+ DD.getFullYear()).slice(-2);
+				Month =('00'+ (DD.getMonth() + 1)).slice(-2);
+				Day	= ('00'+ DD.getDate()).slice(-2);
+				Hours = ('00'+ DD.getHours()).slice(-2);
+				Minutes = ('00'+ DD.getMinutes()).slice(-2);
+				Seconds = ('00'+ DD.getSeconds()).slice(-2);				
+				document.getElementById("settimetext").value = ""+Hours + Minutes + Seconds;
+				document.getElementById("setdatetext").value = ""+Year + Month + Day;
+			}
+			t = setInterval("dsptime()", 500);
+			function sendRemote(){
+				send("/remote/");
+				document.getElementById("NOWstatus").innerHTML="[Remote]";
+			}
+			function sendLocal(){
+				send("/local/");
+				document.getElementById("NOWstatus").innerHTML="[Local]";
+			}
+			function sendStart(){
+				send("/start/");
+				document.getElementById("Pausestatus").innerHTML="[Start]";
+			}
+			function sendStop(){
+				send("/stop/");
+				document.getElementById("Pausestatus").innerHTML="[Stop]";
+			}
+			function sendFPause(){
+				send("/fpause/");
+			}
+			function sendInternal(){
+				send("/internal/");
+				document.getElementById("Datastatus").innerHTML="[Internal Data]";
+			}
+			function sendMemory(){
+				send("/memory/");
+				document.getElementById("Datastatus").innerHTML="[Memory Data]";
+			}
+			function sendMode0(){
+				send("/mode0/");
+				document.getElementById("MODEstatus").innerHTML="[Animation]";
+			}
+			function sendMode1(){
+				send("/mode1/");
+				document.getElementById("MODEstatus").innerHTML="[Rotation]";
+			}
+			function sendMode2(){
+				send("/mode2/");
+				document.getElementById("MODEstatus").innerHTML="[One-stroke]";
+			}
+			function sendMode3(){
+				send("/mode3/");
+				document.getElementById("MODEstatus").innerHTML="[Always-ON]";
+			}
+			function sendMode4(){
+				send("/mode4/");
+				document.getElementById("MODEstatus").innerHTML="[Analog Watch]";
+			}
+			function sendMode5(){
+				send("/mode5/");
+				document.getElementById("MODEstatus").innerHTML="[Digital Watch]";
+			}
+			function sendMode6(){
+				send("/mode6/");
+				document.getElementById("MODEstatus").innerHTML="[Date]";
+			}
+			function sendMode7(){
+				send("/mode7/");
+				document.getElementById("MODEstatus").innerHTML="[String]";
+			}
+			function sendPattern0(){
+				send("/pattern0/");
+				document.getElementById("PATTERNstatus").innerHTML="[Star/Data0]";
+			}
+			function sendPattern1(){
+				send("/pattern1/");
+				document.getElementById("PATTERNstatus").innerHTML="[Arrow/Data1]";
+			}
+			function sendPattern2(){
+				send("/pattern2/");
+				document.getElementById("PATTERNstatus").innerHTML="[Mail/Data2]";
+			}
+			function sendPattern3(){
+				send("/pattern3/");
+				document.getElementById("PATTERNstatus").innerHTML="[Smile/Data3]";
+			}
+			function sendPattern4(){
+				send("/pattern4/");
+				document.getElementById("PATTERNstatus").innerHTML="[Heart/Data4]";
+			}
+			function sendPattern5(){
+				send("/pattern5/");
+				document.getElementById("PATTERNstatus").innerHTML="[Sun/Data5]";
+			}
+			function sendPattern6(){
+				send("/pattern6/");
+				document.getElementById("PATTERNstatus").innerHTML="[Cloud/Data6]";
+			}
+			function sendPattern7(){
+				send("/pattern7/");
+				document.getElementById("PATTERNstatus").innerHTML="[Rain/Data7]";
+			}
+			function sendPattern8(){
+				send("/pattern8/");
+				document.getElementById("PATTERNstatus").innerHTML="[Snow/Data8]";
+			}
+			function sendPattern9(){
+				send("/pattern9/");
+				document.getElementById("PATTERNstatus").innerHTML="[Thunder/Data9]";
+			}
+			function sendTSC(){
+				send("/tsc/");
+			}			
+			function send(url){
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", url, true);
+				xhr.send();
+			}
+		</script>
+		<div>
+		<h2>&nbsp;Projection Ball Remote</h2>
+		</div>
+		
+		<div onclick="obj=document.getElementById('open0').style; obj.display=(obj.display=='none')?'block':'none';">
+		<h1 style="cursor:pointer;">▼ Control</h1>
+		</div>
+		<div id="open0" style="display:none;clear:both;">
+			<!-- <p >Control Priority  </p><p id="NOWstatus">&nbsp;</p> -->
+			<!-- <button id="remote" onClick=sendRemote() style="WIDTH:200px; HEIGHT: 30px">Remote Mode</button> -->
+			<!-- </br> -->
+			<!-- <button id="local" onClick=sendLocal() style="WIDTH:200px; HEIGHT: 30px">Local Mode</button>	 -->
+			<!-- </br> -->
+			<p >Start/Stop  </p><p id="Pausestatus">&nbsp;</p>
+			<button id="start" onClick=sendStart() style="WIDTH:200px; HEIGHT: 30px">Start</button></br>
+			<button id="stop" onClick=sendStop() style="WIDTH:200px; HEIGHT: 30px">Stop</button></br>
+			<p >Angle  </p><p id="Anglestatus">&nbsp;</p>
+			<form method='post'>
+			<input type='number'  min='0' max='360' name='Angle' style="WIDTH:135px" placeholder='Angle (0~360°)'>
+			<input type='submit' value='Send'>			
+			</form>
+			<p >Frame Control  </p>
+			<form method='post'>
+			<input type='number' min='0' max='18' name='Frame' style="WIDTH:135px"  placeholder='Frame No.(0~18)'>
+			<input type='submit' value='Send'>
+			</form></br></br>	
+			<button id="fpause" onClick=sendFPause() style="WIDTH:200px; HEIGHT: 30px">Frame Pause</button>
+			<p id="Framestatus">&nbsp;</p>							
+		</div>		
+		<div onclick="obj=document.getElementById('open1').style; obj.display=(obj.display=='none')?'block':'none';">
+		<h1 style="cursor:pointer;">▼ Data</h1>
+		</div>
+		<div id="open1" style="display:none;clear:both;">
+			<p id="Datastatus">&nbsp;</p>
+			<button id="internal" onClick=sendInternal() style="WIDTH:200px; HEIGHT: 30px">Internal Data</button>
+			</br>
+			<button id="memory" onClick=sendMemory() style="WIDTH:200px; HEIGHT: 30px">Memory Data</button>	
+			
+		</div>		
+		<div onclick="obj=document.getElementById('open2').style; obj.display=(obj.display=='none')?'block':'none';">
+		<h1 style="cursor:pointer;">▼ Mode</h1>
+		</div>
+		<div id="open2" style="display:none;clear:both;">			
+			<p id="MODEstatus">&nbsp;</p>
+			<button id="mode0" onClick=sendMode0() style="WIDTH:200px; HEIGHT: 30px">Animation</button>
+			</br>
+			<button id="mode1" onClick=sendMode1() style="WIDTH:200px; HEIGHT: 30px">Rotation</button>
+			</br>
+			<button id="mode2" onClick=sendMode2() style="WIDTH:200px; HEIGHT: 30px">One-stroke</button>
+			</br>
+			<button id="mode3" onClick=sendMode3() style="WIDTH:200px; HEIGHT: 30px">Always-ON</button>	
+			</br></br>
+			<button id="mode4" onClick=sendMode4() style="WIDTH:200px; HEIGHT: 30px">Analog Watch</button>
+			</br>			
+			<button id="mode5" onClick=sendMode5() style="WIDTH:200px; HEIGHT: 30px">Digital Watch</button>	
+			</br>
+			<button id="mode6" onClick=sendMode6() style="WIDTH:200px; HEIGHT: 30px">Date</button>	
+			</br>
+			<button id="mode7" onClick=sendMode7() style="WIDTH:200px; HEIGHT: 30px">String</button>	
+				
+			<form method='post'>
+			<input type='text' name='SString' style="WIDTH:135px" placeholder='String'>
+			<input type='submit' value='Send'>
+			<p id="Stringstatus">&nbsp;</p>
+			</form>	
+		</div>		
+		<div onclick="obj=document.getElementById('open3').style; obj.display=(obj.display=='none')?'block':'none';">
+		<h1 style="cursor:pointer;">▼ Pattern</h1>
+		</div>
+		<div id="open3" style="display:none;clear:both;">
+			<p id="PATTERNstatus">&nbsp;</p>
+			<button id="pattern0" onClick=sendPattern0() style="WIDTH:200px; HEIGHT: 30px">Star/Data0</button>
+			</br>
+			<button id="pattern1" onClick=sendPattern1() style="WIDTH:200px; HEIGHT: 30px">Arrow/Data1</button>
+			</br>
+			<button id="pattern2" onClick=sendPattern2() style="WIDTH:200px; HEIGHT: 30px">Mail/Data2</button>
+			</br>
+			<button id="pattern3" onClick=sendPattern3() style="WIDTH:200px; HEIGHT: 30px">Smile/Data3</button>
+			</br>
+			<button id="pattern4" onClick=sendPattern4() style="WIDTH:200px; HEIGHT: 30px">Heart/Data4</button>		
+			</br></br>
+			<button id="pattern5" onClick=sendPattern5() style="WIDTH:200px; HEIGHT: 30px">Sun/Data5</button>		
+			</br>
+			<button id="pattern6" onClick=sendPattern6() style="WIDTH:200px; HEIGHT: 30px">Cloud/Data6</button>		
+			</br>
+			<button id="pattern7" onClick=sendPattern7() style="WIDTH:200px; HEIGHT: 30px">Rain/Data7</button>
+			</br>
+			<button id="pattern8" onClick=sendPattern8() style="WIDTH:200px; HEIGHT: 30px">Snow/Data8</button>
+			</br>
+			<button id="pattern9" onClick=sendPattern9() style="WIDTH:200px; HEIGHT: 30px">Thunder/Data9</button>			
+		</div>		
+		<div onclick="obj=document.getElementById('open4').style; obj.display=(obj.display=='none')?'block':'none';">
+		<h1 style="cursor:pointer;">▼ Config</h1>
+		</div>		
+		<div id="open4" style="display:none;clear:both;">
+		<p >Wifi AP Mode Setting </p>
+		<form method='post'>
+		<input type='text' name='SSID' placeholder='SSID'></br>
+		<input type='text' name='PASS' placeholder='PASS'>
+		<input type='submit'  value='Save'>
+		</form>
+		<p >Set Date </p>
+		<form method='post'>
+		<input type='text' id="setdatetext" name='SDate' style="WIDTH:135px" readonly="readonly">
+		<input type='submit' value='Send'>
+		<p id="Datestatus"></p>
+		</form>			
+		<p >Set Time </p>
+		<form method='post'>
+		<input type='text' id="settimetext" name='STime' style="WIDTH:135px" readonly="readonly">
+		<input type='submit' value='Send'>
+		<p id="Timestatus"></p>
+		</form>
+		<button id="tsc" onClick=sendTSC() style="WIDTH:200px; HEIGHT: 30px">Touch Sensor En/Dis</button>
+		</br>			
+		</div>	
+			
+		<div onclick="obj=document.getElementById('open9').style; obj.display=(obj.display=='none')?'block':'none';">
+		<h1 style="cursor:pointer;">▼ INFO</h1>
+		</div>
+		<div id="open9" style="display:none;clear:both;">
+			<p >Version : 2.1.2</p>
+			<p >Release : 17/04/30</p>
+			<a href="http://projectionball.jp/"　title="">[ja]Official Web Site</a>
+			</br></br>
+			<a href="http://projectionball.com/"　title="">[en]Official Web Site</a>
+			</br></br>
+			<a href="https://github.com/meerstern/prjball-wifimodule"　title="">About This App</a>
+			</br></br>
+			<a href="https://www.facebook.com/projectionball"　title="">Official Facebook</a>		
+		</div>
+		<p style ="font-size:10pt">Copyright&copy; Crescent All Rights Reserved.</p>		
+    </body>
+</html>
+
